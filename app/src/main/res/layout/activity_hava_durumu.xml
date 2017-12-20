@@ -8,7 +8,8 @@
     tools:context="com.weather_condition.hava_durumu"
     android:orientation="vertical"
     android:gravity="center"
-    android:layout_margin="20dp">
+    android:background="@drawable/havadurumu"
+    android:alpha=".9">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +21,7 @@
             android:id="@+id/imgView"
             android:background="@drawable/hava"
             android:layout_width="100dp"
-            android:layout_height="100dp" android:contentDescription="TODO"/>
+            android:layout_height="100dp" />
 
         <TextView
             android:id="@+id/txtSehir"
@@ -100,6 +101,7 @@
 
         <Spinner
             android:id="@+id/spinner"
+            android:padding="15dp"
             android:entries="@array/sehirler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -110,10 +112,14 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Goster"
             android:layout_weight="1"
+            android:onClick="onGoster"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/background_light"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:padding="15dp"
-            android:onClick="onGoster"/>
+            android:text="@string/goster" />
     </LinearLayout>
 
 </LinearLayout>

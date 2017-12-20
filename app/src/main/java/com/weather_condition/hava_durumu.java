@@ -97,7 +97,7 @@ public class hava_durumu extends Activity {
                 JSONObject jsonObject=new JSONObject(dosya);
 
                 JSONObject jsonObject_main=jsonObject.getJSONObject("main");
-                txtSicaklik.setText((jsonObject_main.getInt("temp")-273)+"");
+                txtSicaklik.setText((jsonObject_main.getInt("temp")-273)+" \u2103");
                 txtSehir.setText(jsonObject.getString("name"));
 
 

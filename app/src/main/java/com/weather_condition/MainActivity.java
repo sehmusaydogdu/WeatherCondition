@@ -19,5 +19,7 @@ public class MainActivity extends Activity {
     }
 
     public void onListele(View view) {
+        Intent intent=new Intent(this,sehirler_listesi.class);
+        startActivity(intent);
     }
 }
