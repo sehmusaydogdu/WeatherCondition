@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Weather-Condition</string>
+    <string name="listele">Şehirler</string>
+    <string name="hava_durumu">Hava Durumu</string>
+    <string name="header">Şehir Seçiniz</string>
+
+    <string-array name="sehirler">
+        <item>Ankara</item>
+        <item>Istanbul</item>
+        <item>İzmir</item>
+    </string-array>
+</resources>
