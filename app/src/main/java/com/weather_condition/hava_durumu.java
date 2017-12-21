@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class hava_durumu extends Activity {
 
@@ -33,6 +35,9 @@ public class hava_durumu extends Activity {
     private String secilenSehir;
 
     private Bitmap bitImage;
+
+    private List<Sehirler> appList;
+    private List<String>appSehirler;
 
     private void init(){
         txtAciklama=findViewById(R.id.txtAciklama);
@@ -49,6 +54,7 @@ public class hava_durumu extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hava_durumu);
         init();
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -65,6 +71,18 @@ public class hava_durumu extends Activity {
         super.onResume();
         sehirler.add("Ankara");
         secilenSehir=sehirler.get(0);
+
+        Database appDatabase=new Database(this);
+        appList=appDatabase.tumKayitlar();
+        appSehirler=new ArrayList<>();
+        for (Sehirler s : appList){
+            appSehirler.add(s.getSehirAdi());
+        }
+
+        ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(
+                this,android.R.layout.simple_list_item_1,appSehirler);
+
+        spinner.setAdapter(arrayAdapter);
         new HavaDurumu().execute();
     }
 

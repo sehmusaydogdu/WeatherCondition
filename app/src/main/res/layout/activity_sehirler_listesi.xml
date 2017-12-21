@@ -12,17 +12,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <EditText
-            android:id="@+id/sehirAdi"
+            android:id="@+id/editSehirAdi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
             android:hint="Şehir Giriniz"
-            android:textColorHint="@color/colorAccent"/>
+            android:inputType="textCapCharacters"
+            android:textAllCaps="true"
+            android:textColorHint="@color/colorAccent" />
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ekle"/>
+            android:text="Ekle"
+            android:onClick="onEkle"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -34,7 +39,8 @@
             android:id="@+id/lstView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/sehirler"></ListView>
+            android:entries="@array/sehirler" />
+
     </LinearLayout>
 
 </LinearLayout>
