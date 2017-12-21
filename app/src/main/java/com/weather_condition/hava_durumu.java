@@ -69,12 +69,13 @@ public class hava_durumu extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        sehirler.add("Ankara");
-        secilenSehir=sehirler.get(0);
+        sehirler.add("İzmir");
+        secilenSehir=sehirler.get(0).toString();
 
         Database appDatabase=new Database(this);
         appList=appDatabase.tumKayitlar();
         appSehirler=new ArrayList<>();
+
         for (Sehirler s : appList){
             appSehirler.add(s.getSehirAdi());
         }
@@ -94,6 +95,7 @@ public class hava_durumu extends Activity {
 
         private String url_kaynak="http://api.openweathermap.org/data/2.5/weather?q="+secilenSehir+"&appid=5519df78a91952f50079565124888a76";
         String icon="";
+        String Aciklama;
         @Override
         protected String doInBackground(String... params) {
 
@@ -115,15 +117,15 @@ public class hava_durumu extends Activity {
                 JSONObject jsonObject=new JSONObject(dosya);
 
                 JSONObject jsonObject_main=jsonObject.getJSONObject("main");
-                txtSicaklik.setText((jsonObject_main.getInt("temp")-273)+" \u2103");
+                txtSicaklik.setText(String.valueOf(jsonObject_main.getInt("temp")-273)+"\u2103");
                 txtSehir.setText(jsonObject.getString("name"));
 
 
                 JSONArray jsonArray=jsonObject.getJSONArray("weather");
                 JSONObject jsonArrayJSONObject=jsonArray.getJSONObject(0);
 
-                txtAciklama.setText(jsonArrayJSONObject.getString("description").toUpperCase());
-                txtHavaDurumu.setText(jsonArrayJSONObject.getString("main").toUpperCase());
+                Aciklama=jsonArrayJSONObject.getString("description").toUpperCase();
+                txtHavaDurumu.setText(jsonArrayJSONObject.getString("main").toUpperCase().toString());
 
                 icon=jsonArrayJSONObject.getString("icon");
                 URL icon_url = new URL("http://openweathermap.org/img/w/"+icon+".png");
@@ -142,6 +144,8 @@ public class hava_durumu extends Activity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             imgView.setImageBitmap(bitImage);
+            txtAciklama.setText(Aciklama);
+
         }
     }
 
