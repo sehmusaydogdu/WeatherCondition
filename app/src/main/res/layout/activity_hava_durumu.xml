@@ -121,7 +121,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onGoster"
-            android:background="@drawable/custom_button"
+            android:background="@color/colorPrimary"
             android:textColor="@android:color/background_light"
             android:textSize="20sp"
             android:textStyle="bold"
