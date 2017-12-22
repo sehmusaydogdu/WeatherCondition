@@ -12,8 +12,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class sehirler_listesi extends Activity {
@@ -21,8 +19,6 @@ public class sehirler_listesi extends Activity {
 
     private ListView lstView;
     private EditText editSehirAdi;
-    private List<Sehirler> appList;
-    private List<String>appSehirler;
 
     private Database appDatabase;
 
@@ -37,17 +33,12 @@ public class sehirler_listesi extends Activity {
         setContentView(R.layout.activity_sehirler_listesi);
         init();
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         lstView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(final AdapterView<?> adapterView, View view, final int i, long l) {
                 AlertDialog alertMessage = new AlertDialog.Builder(sehirler_listesi.this).create();
                 alertMessage.setTitle("Sil");
-                alertMessage.setMessage(adapterView.getAdapter().getItem(i).toString()+"silmek istediğinizden emin misiniz?");
+                alertMessage.setMessage(adapterView.getAdapter().getItem(i).toString()+" şehrini silmek istediğinizden emin misiniz?");
 
                 alertMessage.setButton(AlertDialog.BUTTON_POSITIVE,"OK", new DialogInterface.OnClickListener(){
 
@@ -68,18 +59,13 @@ public class sehirler_listesi extends Activity {
 
             }
         });
+
     }
 
     private void Listele(){
         try{
-            appList=appDatabase.tumKayitlar();
-            appSehirler=new ArrayList<>();
-            for (Sehirler s : appList){
-                appSehirler.add(s.getSehirAdi());
-            }
-
             ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(
-                    this,android.R.layout.simple_list_item_1,appSehirler);
+                    this,android.R.layout.simple_list_item_1,appDatabase.getSehirAdiList());
             lstView.setAdapter(arrayAdapter);
         }
         catch (SQLiteException ex){
@@ -99,9 +85,9 @@ public class sehirler_listesi extends Activity {
             Toast.makeText(this, "Lütfen Şehir Giriniz", Toast.LENGTH_SHORT).show();
         }
         else{
-             appDatabase.sehirEkle(deger);
-             Listele();
-             editSehirAdi.setText("");
+            appDatabase.sehirEkle(deger);
+            Listele();
+            editSehirAdi.setText("");
         }
     }
 }

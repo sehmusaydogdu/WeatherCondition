@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +35,6 @@ public class Database extends SQLiteOpenHelper {
                 +SEHIR_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "
                 +SEHIR_ADI+" TEXT NOT NULL"+")";
         sqLiteDatabase.execSQL(CREATE_TABLE);
-      /*  sehirEkle("Adana");
-        sehirEkle("Mersin");*/
 
     }
 
@@ -50,11 +47,11 @@ public class Database extends SQLiteOpenHelper {
 
     public void sehirEkle(String sehirler){
 
-            SQLiteDatabase db=this.getWritableDatabase();
-            ContentValues values=new ContentValues();
-            values.put(SEHIR_ADI,sehirler);
-            db.insert(TABLE_NAME,null,values);
-            db.close();
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put(SEHIR_ADI,sehirler);
+        db.insert(TABLE_NAME,null,values);
+        db.close();
 
     }
 
@@ -65,24 +62,6 @@ public class Database extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public List<Sehirler> tumKayitlar(){
-
-        List<Sehirler> sehirlerList=new ArrayList<>();
-        String selectQuery="SELECT * FROM "+TABLE_NAME;
-        SQLiteDatabase db=this.getWritableDatabase();
-
-        Cursor cursor=db.rawQuery(selectQuery,null);
-        if(cursor.moveToFirst()){
-            do{
-                Sehirler s=new Sehirler();
-                s.setSehirID(Integer.parseInt(cursor.getString(0)));
-                s.setSehirAdi(cursor.getString(1));
-                sehirlerList.add(s);
-            }
-            while (cursor.moveToNext());
-        }
-        return sehirlerList;
-    }
 
     public void getSehirID(String sehir){
         SQLiteDatabase db=this.getReadableDatabase();
@@ -92,6 +71,22 @@ public class Database extends SQLiteOpenHelper {
             int _id=cursor.getInt(0);
             sehirSil(_id);
         }
+    }
+
+
+    public List<String> getSehirAdiList(){
+        List<String> sehirlerList=new ArrayList<>();
+        String selectQuery="SELECT sehir_adi FROM "+TABLE_NAME;
+        SQLiteDatabase db=this.getReadableDatabase();
+
+        Cursor cursor=db.rawQuery(selectQuery,null);
+        if(cursor.moveToFirst()){
+            do{
+                sehirlerList.add(cursor.getString(0));
+            }
+            while (cursor.moveToNext());
+        }
+        return sehirlerList;
     }
 
 }

@@ -30,14 +30,10 @@ public class hava_durumu extends Activity {
     private TextView txtAciklama,txtSehir,txtSicaklik,txtHavaDurumu;
     private Spinner spinner;
     private ImageView imgView;
-
-    private ArrayList<String> sehirler;
-    private String secilenSehir;
-
     private Bitmap bitImage;
 
-    private List<Sehirler> appList;
-    private List<String>appSehirler;
+    private String secilenSehir;
+    private Database appDatabase;
 
     private void init(){
         txtAciklama=findViewById(R.id.txtAciklama);
@@ -46,7 +42,8 @@ public class hava_durumu extends Activity {
         txtSicaklik=findViewById(R.id.txtSicaklik);
         spinner=findViewById(R.id.spinner);
         imgView=findViewById(R.id.imgView);
-        sehirler=new ArrayList<>();
+        appDatabase=new Database(this);
+        secilenSehir="İZMİR";
     }
 
     @Override
@@ -54,7 +51,6 @@ public class hava_durumu extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hava_durumu);
         init();
-
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -69,19 +65,9 @@ public class hava_durumu extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        sehirler.add("İzmir");
-        secilenSehir=sehirler.get(0).toString();
-
-        Database appDatabase=new Database(this);
-        appList=appDatabase.tumKayitlar();
-        appSehirler=new ArrayList<>();
-
-        for (Sehirler s : appList){
-            appSehirler.add(s.getSehirAdi());
-        }
 
         ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(
-                this,android.R.layout.simple_list_item_1,appSehirler);
+                this,android.R.layout.simple_list_item_1,appDatabase.getSehirAdiList());
 
         spinner.setAdapter(arrayAdapter);
         new HavaDurumu().execute();
@@ -95,7 +81,8 @@ public class hava_durumu extends Activity {
 
         private String url_kaynak="http://api.openweathermap.org/data/2.5/weather?q="+secilenSehir+"&appid=5519df78a91952f50079565124888a76";
         String icon="";
-        String Aciklama;
+        String Aciklama,Sehir,HavaDurumu;
+        int sicaklik;
         @Override
         protected String doInBackground(String... params) {
 
@@ -117,15 +104,17 @@ public class hava_durumu extends Activity {
                 JSONObject jsonObject=new JSONObject(dosya);
 
                 JSONObject jsonObject_main=jsonObject.getJSONObject("main");
-                txtSicaklik.setText(String.valueOf(jsonObject_main.getInt("temp")-273)+"\u2103");
-                txtSehir.setText(jsonObject.getString("name"));
+
+                sicaklik=jsonObject_main.getInt("temp")-273;
+                Sehir=jsonObject.getString("name").toUpperCase();
 
 
                 JSONArray jsonArray=jsonObject.getJSONArray("weather");
                 JSONObject jsonArrayJSONObject=jsonArray.getJSONObject(0);
 
                 Aciklama=jsonArrayJSONObject.getString("description").toUpperCase();
-                txtHavaDurumu.setText(jsonArrayJSONObject.getString("main").toUpperCase().toString());
+                HavaDurumu=jsonArrayJSONObject.getString("main").toUpperCase();
+
 
                 icon=jsonArrayJSONObject.getString("icon");
                 URL icon_url = new URL("http://openweathermap.org/img/w/"+icon+".png");
@@ -145,6 +134,9 @@ public class hava_durumu extends Activity {
             super.onPostExecute(s);
             imgView.setImageBitmap(bitImage);
             txtAciklama.setText(Aciklama);
+            txtSicaklik.setText(String.valueOf(sicaklik)+"\u2103");
+            txtSehir.setText(Sehir);
+            txtHavaDurumu.setText(HavaDurumu);
 
         }
     }
