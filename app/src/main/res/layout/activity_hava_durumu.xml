@@ -19,27 +19,29 @@
 
         <ImageView
             android:id="@+id/imgView"
-            android:background="@drawable/hava"
+            android:background="@drawable/havadurumu"
             android:layout_width="100dp"
             android:layout_height="100dp" />
 
         <TextView
             android:id="@+id/txtSehir"
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Seçilen Şehir"
+            android:layout_marginTop="20dp"
             android:gravity="center"
-            android:textSize="25sp"/>
+            android:text="Seçilen Şehir"
+            android:textSize="25sp"
+            android:textColor="@android:color/background_light"/>
 
         <TextView
             android:id="@+id/txtSicaklik"
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sıcaklık"
+            android:layout_marginTop="20dp"
             android:gravity="center"
-            android:textSize="40sp"/>
+            android:text="Sıcaklık"
+            android:textColor="@android:color/background_light"
+            android:textSize="40sp" />
 
     </LinearLayout>
 
@@ -58,7 +60,8 @@
                 android:layout_height="wrap_content"
                 android:text="Hava Durumu"
                 android:textSize="20dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textColor="@android:color/background_light"/>
 
             <TextView
                 android:id="@+id/txtHavaDurumu"
@@ -67,7 +70,8 @@
                 android:text=""
                 android:textSize="20dp"
                 android:gravity="right"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textColor="@android:color/background_light"/>
         </LinearLayout>
 
         <LinearLayout
@@ -80,7 +84,8 @@
                 android:layout_height="wrap_content"
                 android:text="Açıklama"
                 android:textSize="20dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textColor="@android:color/background_light"/>
 
             <TextView
                 android:id="@+id/txtAciklama"
@@ -89,7 +94,8 @@
                 android:text=""
                 android:textSize="20dp"
                 android:gravity="right"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textColor="@android:color/background_light"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -107,14 +113,15 @@
             android:layout_height="wrap_content"
             android:prompt="@string/header"
             android:spinnerMode="dialog"
-            style="@android:style/Widget.Spinner"/>
+            style="@android:style/Widget.Spinner"
+            />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onGoster"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/custom_button"
             android:textColor="@android:color/background_light"
             android:textSize="20sp"
             android:textStyle="bold"

@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="20dp"
-    android:background="@drawable/hava"
+    android:background="@drawable/main"
     android:alpha=".8">
 
     <Button
@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:alpha=".9"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/custom_button"
         android:onClick="onHavaDurumuGoster"
         android:padding="20dp"
         android:text="@string/hava_durumu"
@@ -28,10 +28,11 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/custom_button"
         android:onClick="onListele"
         android:padding="20dp"
         android:text="@string/listele"
+
         android:textColor="@android:color/background_light"
         android:textSize="20sp"
         android:textStyle="bold" />

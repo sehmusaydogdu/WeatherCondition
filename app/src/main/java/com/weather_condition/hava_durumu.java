@@ -42,6 +42,7 @@ public class hava_durumu extends Activity {
         txtSicaklik=findViewById(R.id.txtSicaklik);
         spinner=findViewById(R.id.spinner);
         imgView=findViewById(R.id.imgView);
+
         appDatabase=new Database(this);
         secilenSehir="İZMİR";
     }
@@ -82,7 +83,7 @@ public class hava_durumu extends Activity {
         private String url_kaynak="http://api.openweathermap.org/data/2.5/weather?q="+secilenSehir+"&appid=5519df78a91952f50079565124888a76";
         String icon="";
         String Aciklama,Sehir,HavaDurumu;
-        int sicaklik;
+        int sicaklik,code;
         @Override
         protected String doInBackground(String... params) {
 
@@ -101,24 +102,37 @@ public class hava_durumu extends Activity {
                     dosya+=satir;
                 }
 
-                JSONObject jsonObject=new JSONObject(dosya);
 
-                JSONObject jsonObject_main=jsonObject.getJSONObject("main");
-
-                sicaklik=jsonObject_main.getInt("temp")-273;
-                Sehir=jsonObject.getString("name").toUpperCase();
+                JSONObject jsonObject=new JSONObject(dosya);//Veriler JSON formatında döner
+                code=jsonObject.getInt("cod"); //Json'dan gelen code alıyorum.
 
 
-                JSONArray jsonArray=jsonObject.getJSONArray("weather");
-                JSONObject jsonArrayJSONObject=jsonArray.getJSONObject(0);
-
-                Aciklama=jsonArrayJSONObject.getString("description").toUpperCase();
-                HavaDurumu=jsonArrayJSONObject.getString("main").toUpperCase();
+                if(code==200){//Cod = 200 ise işlem başarılıdır.
 
 
-                icon=jsonArrayJSONObject.getString("icon");
-                URL icon_url = new URL("http://openweathermap.org/img/w/"+icon+".png");
-                bitImage = BitmapFactory.decodeStream(icon_url.openConnection().getInputStream());
+                    Sehir=jsonObject.getString("name").toUpperCase(); //Seçilen şehrin adını döndürüyor.
+
+                    //Şehrin sıcaklığını Kelvinden dereceye dönüştürüp alıyorum
+                    JSONObject jsonObject_main=jsonObject.getJSONObject("main");
+                    sicaklik=jsonObject_main.getInt("temp")-273;
+
+                    JSONObject json_sys=jsonObject.getJSONObject("sys");
+                    Sehir+=" - "+json_sys.getString("country");
+
+                    JSONArray jsonArray=jsonObject.getJSONArray("weather");
+                    JSONObject jsonArrayJSONObject=jsonArray.getJSONObject(0);
+
+                    Aciklama=jsonArrayJSONObject.getString("description").toUpperCase();
+                    HavaDurumu=jsonArrayJSONObject.getString("main").toUpperCase();
+
+
+                    icon=jsonArrayJSONObject.getString("icon");
+                    URL icon_url = new URL("http://openweathermap.org/img/w/"+icon+".png");
+                    bitImage = BitmapFactory.decodeStream(icon_url.openConnection().getInputStream());
+                }
+                else{
+                    Toast.makeText(hava_durumu.this, "Bulunamadı", Toast.LENGTH_SHORT).show();
+                }
 
                 return dosya;
             }

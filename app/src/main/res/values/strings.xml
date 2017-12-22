@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Weather-Condition</string>
+    <string name="app_name">Weather Condition</string>
     <string name="listele">Şehirler</string>
     <string name="hava_durumu">Hava Durumu</string>
     <string name="header">Şehir Seçiniz</string>

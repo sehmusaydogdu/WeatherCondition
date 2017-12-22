@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.weather_condition.sehirler_listesi"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/list">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,13 +21,19 @@
             android:hint="Şehir Giriniz"
             android:inputType="textCapCharacters"
             android:textAllCaps="true"
-            android:textColorHint="@color/colorAccent" />
+            android:textColorHint="@color/colorAccent"
+            android:padding="18dp"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ekle"
-            android:onClick="onEkle"/>
+            android:onClick="onEkle"
+            android:textColor="@android:color/background_light"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:alpha=".9"
+            android:background="@drawable/custom_button"/>
 
     </LinearLayout>
 
