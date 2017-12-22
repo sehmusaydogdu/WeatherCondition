@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,7 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
-    public void sehirSil(int id){
+    private void sehirSil(int id){
         SQLiteDatabase db=this.getWritableDatabase();
         db.delete(TABLE_NAME,SEHIR_ID+"= ?",
                 new String[]{String.valueOf(id)});
@@ -49,11 +50,11 @@ public class Database extends SQLiteOpenHelper {
 
     public void sehirEkle(String sehirler){
 
-        SQLiteDatabase db=this.getWritableDatabase();
-        ContentValues values=new ContentValues();
-        values.put(SEHIR_ADI,sehirler);
-        db.insert(TABLE_NAME,null,values);
-        db.close();
+            SQLiteDatabase db=this.getWritableDatabase();
+            ContentValues values=new ContentValues();
+            values.put(SEHIR_ADI,sehirler);
+            db.insert(TABLE_NAME,null,values);
+            db.close();
 
     }
 
@@ -81,6 +82,16 @@ public class Database extends SQLiteOpenHelper {
             while (cursor.moveToNext());
         }
         return sehirlerList;
+    }
+
+    public void getSehirID(String sehir){
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor cursor=db.query(TABLE_NAME,new String[]{SEHIR_ID,SEHIR_ADI},SEHIR_ADI+"=?",new String[]{sehir},null,null,null,null);
+        if(cursor != null){
+            cursor.moveToFirst();
+            int _id=cursor.getInt(0);
+            sehirSil(_id);
+        }
     }
 
 }

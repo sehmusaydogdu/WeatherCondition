@@ -44,15 +44,16 @@ public class sehirler_listesi extends Activity {
         super.onResume();
         lstView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public boolean onItemLongClick(final AdapterView<?> adapterView, View view, final int i, long l) {
                 AlertDialog alertMessage = new AlertDialog.Builder(sehirler_listesi.this).create();
                 alertMessage.setTitle("Sil");
-                alertMessage.setMessage(" silmek istediğinizden emin misiniz?");
+                alertMessage.setMessage(adapterView.getAdapter().getItem(i).toString()+"silmek istediğinizden emin misiniz?");
 
                 alertMessage.setButton(AlertDialog.BUTTON_POSITIVE,"OK", new DialogInterface.OnClickListener(){
 
                     public void onClick(DialogInterface dialog, int which) {
-                        //appDatabase.sehirSil();
+                        appDatabase.getSehirID(adapterView.getAdapter().getItem(i).toString());
+                        Listele();
                     }
                 });
 
@@ -98,10 +99,9 @@ public class sehirler_listesi extends Activity {
             Toast.makeText(this, "Lütfen Şehir Giriniz", Toast.LENGTH_SHORT).show();
         }
         else{
-            //Database db=new Database(this);
-            appDatabase.sehirEkle(deger);
-            Listele();
+             appDatabase.sehirEkle(deger);
+             Listele();
+             editSehirAdi.setText("");
         }
-
     }
 }
